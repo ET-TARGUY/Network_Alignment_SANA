@@ -1,0 +1,79 @@
+# Project paths
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  data_results: "data/results"
+  outputs: "outputs"
+
+# Dataset pairs for alignment
+dataset_pairs:
+  - ["Dataset1", "Dataset5"]
+
+# Zone selection
+zone: "full"  # Options: "full" or "Prades"
+
+# Spatial matching
+spatial:
+  radius: 20  # meters
+  method: "kdtree"
+
+# Structural similarity (CENA)
+structural:
+  K: 3  # k-hop neighborhood depth
+  alpha: 1.0  # decay parameter
+
+# Compound graph construction
+compound_graph:
+  method: "gaussian"  # Options: "gaussian" or "cena"
+  
+  # Gaussian method parameters
+  gaussian:
+    sigma: 3
+    threshold: 0
+  
+  # CENA method parameters
+  cena:
+    threshold: 0.0  # No threshold for CENA (uses all cross-edges)
+
+# Random walks (for embeddings)
+random_walks:
+  num_walks: 10  # walks per node
+  walk_length: 80  # length of each walk
+  seed: 42  # random seed for reproducibility
+
+   # CENA-specific parameters
+  cena:
+    q: 0.5  # Network switching probability (0.5 = equal probability)
+
+
+
+
+# Embeddings (Word2Vec Skip-gram)
+embeddings:
+  vector_size: 128
+  window: 5
+  min_count: 1
+  workers: 20
+  epochs: 5
+  sg: 1  # 1 for Skip-gram, 0 for CBOW
+  hs: 0  # 0 for negative sampling
+  negative: 5
+  seed: 42
+
+
+# Hungarian alignment
+alignment:
+  alpha: 1  # Embedding weight
+  beta: 0   # Spatial weight (should equal 1 - alpha)
+  sigma: 5    # Gaussian bandwidth for spatial similarity
+  min_similarity: 0  # Minimum combined similarity threshold
+
+
+
+
+
+
+
+
+  
+ 

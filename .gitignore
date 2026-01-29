@@ -1,0 +1,47 @@
+# Virtual environments
+.venv/
+venv/
+env/
+venv_struc2vec
+
+
+# IDE
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+
+# Data files - these are usually too large for Git
+data/
+raw/
+processed/
+results/
+outputs/
+
+# Cache directories
+cache/
+.cache/
+
+# Temporary files
+temp/
+*.tmp
+
+# Pickles (can be regenerated)
+pickles/
+*.pkl
+*.pickle
+
+# Embeddings (large files, can be regenerated)
+embeddings/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Environment variables
+.env

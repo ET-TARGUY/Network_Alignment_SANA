@@ -1,0 +1,20 @@
+# Project paths
+paths:
+  data_processed: "data/processed"
+  outputs: "outputs/deepwalk"
+  temp: "temp"
+
+# Dataset pairs
+dataset_pairs:
+  - ["Dataset1", "Dataset5"]
+
+# Zone
+zone: "full"
+
+# DeepWalk parameters
+deepwalk:
+  num_walks: 10
+  walk_length: 80
+  dimensions: 128
+  window_size: 5
+  workers: 4

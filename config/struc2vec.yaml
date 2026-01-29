@@ -1,0 +1,29 @@
+# Project paths
+paths:
+  data_processed: "data/processed"
+  outputs: "outputs/struc2vec"
+  temp: "temp"  # For temporary edgelist files
+
+# Dataset pairs
+dataset_pairs:
+  - ["Dataset1", "Dataset5"]
+
+# Zone
+zone: "Prades"  # Only Prades
+
+# Struc2vec parameters
+struc2vec:
+  num_walks: 10
+  walk_length: 80
+  dimensions: 128
+  window_size: 5
+  workers: 4
+  OPT1: true
+  OPT2: true
+  OPT3: true
+  until_layer: 6
+  
+  # Comparison methods
+  comparison_methods:
+    - "direct"
+    - "normalized"
