@@ -27,7 +27,8 @@ PROCESSED_DATA_DIR = Path("data/processed")
 PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # Dataset names
-DATASETS = ["Dataset1", "Dataset2", "Dataset3", "Dataset4", "Dataset5"]
+#DATASETS = ["Dataset1", "Dataset2", "Dataset3", "Dataset4", "Dataset5"]
+DATASETS = ["Dataset1","Dataset5"]
 
 # ============================================
 # LOAD ALL DATASETS

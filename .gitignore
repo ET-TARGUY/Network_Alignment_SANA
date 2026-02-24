@@ -15,12 +15,30 @@ __pycache__/
 .Python
 
 
-# Data files - these are usually too large for Git
-data/
-raw/
-processed/
-results/
-outputs/
+# Data files - ignore contents, keep folder structure for Dataset1, Dataset5, IGN, OSM
+data/**
+!data/
+!data/raw/
+!data/raw/Dataset1/
+!data/raw/Dataset1/.gitkeep
+!data/raw/Dataset5/
+!data/raw/Dataset5/.gitkeep
+!data/raw/IGN/
+!data/raw/IGN/.gitkeep
+!data/raw/OSM/
+!data/raw/OSM/.gitkeep
+!data/processed/
+!data/processed/Dataset1/
+!data/processed/Dataset1/.gitkeep
+!data/processed/Dataset5/
+!data/processed/Dataset5/.gitkeep
+!data/processed/IGN/
+!data/processed/IGN/.gitkeep
+!data/processed/OSM/
+!data/processed/OSM/.gitkeep
+outputs/**
+!outputs/
+!outputs/.gitkeep
 
 # Cache directories
 cache/

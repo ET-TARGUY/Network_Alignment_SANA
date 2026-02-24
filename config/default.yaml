@@ -28,7 +28,7 @@ compound_graph:
   
   # Gaussian method parameters
   gaussian:
-    sigma: 3
+    sigma: 5
     threshold: 0
   
   # CENA method parameters

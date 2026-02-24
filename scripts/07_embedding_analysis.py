@@ -6,7 +6,7 @@ This script:
 2. Computes cross-network similarities
 3. Analyzes correlation with spatial distance
 4. Evaluates discrimination power and ranking quality
-5. Creates comprehensive visualizations
+5. Creates comprehensive visualizations (separate files)
 """
 import sys
 import os
@@ -190,7 +190,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     spatial_distances = []
     nearest_embedding_sims = []
     
-    sample_size = min(5000, len(candidates_G1_to_G2))
+    sample_size = len(candidates_G1_to_G2)
     sampled_nodes = list(candidates_G1_to_G2.keys())[:sample_size]
     
     for node_g1 in tqdm(sampled_nodes, desc="Computing similarities"):
@@ -262,7 +262,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     print(f"\nComputing discrimination gaps...")
     discrimination_gaps = []
     
-    sample_nodes = list(embeddings_G1.keys())[:1000]
+    sample_nodes = list(embeddings_G1.keys())
     
     for node_g1 in tqdm(sample_nodes, desc="Computing gaps"):
         if node_g1 not in candidates_G1_to_G2:
@@ -334,37 +334,46 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     print(f"  Median rank: {np.median(ranks):.0f}")
     
     # ============================================
-    # VISUALIZATION
+    # VISUALIZATION - SEPARATE FILES
     # ============================================
     
     print(f"\n{'='*60}")
     print(f"CREATING VISUALIZATIONS")
     print(f"{'='*60}")
     
-    fig = plt.figure(figsize=(16, 12))
-    
     # Plot 1: Embedding similarity distribution
-    ax1 = plt.subplot(3, 3, 1)
-    ax1.hist(embedding_similarities, bins=50, edgecolor='black', alpha=0.7)
+    fig1, ax1 = plt.subplots(figsize=(8, 6))
+    ax1.hist(embedding_similarities, bins=50, edgecolor='black', alpha=0.7, range=(0.5, 1.0))
     ax1.set_xlabel('Embedding Similarity')
     ax1.set_ylabel('Frequency')
     ax1.set_title('Embedding Similarity Distribution\n(Candidate Pairs)')
+    ax1.set_xlim(0.7, 1.0)
     ax1.axvline(x=np.median(embedding_similarities), color='red', linestyle='--', 
                 label=f'Median={np.median(embedding_similarities):.3f}')
     ax1.legend()
     ax1.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot1_similarity_dist_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 2: Distance vs Embedding Similarity
-    ax2 = plt.subplot(3, 3, 2)
+    fig2, ax2 = plt.subplots(figsize=(8, 6))
     sample_idx = np.random.choice(len(spatial_distances), min(5000, len(spatial_distances)), replace=False)
     ax2.scatter(spatial_distances[sample_idx], embedding_similarities[sample_idx], alpha=0.1, s=1)
     ax2.set_xlabel('Spatial Distance (m)')
     ax2.set_ylabel('Embedding Similarity')
     ax2.set_title(f'Distance vs Embedding Similarity\n(Correlation: {spearman_corr:.3f})')
     ax2.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot2_distance_vs_similarity_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 3: Discrimination gaps
-    ax3 = plt.subplot(3, 3, 3)
+    fig3, ax3 = plt.subplots(figsize=(8, 6))
     ax3.hist(discrimination_gaps, bins=50, edgecolor='black', alpha=0.7, color='green')
     ax3.set_xlabel('Gap (1st - 2nd best)')
     ax3.set_ylabel('Frequency')
@@ -373,9 +382,14 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
                 label=f'Median={np.median(discrimination_gaps):.3f}')
     ax3.legend()
     ax3.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot3_discrimination_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 4: Rank distribution
-    ax4 = plt.subplot(3, 3, 4)
+    fig4, ax4 = plt.subplots(figsize=(8, 6))
     ax4.hist(ranks, bins=range(1, min(51, int(np.max(ranks))+2)), edgecolor='black', alpha=0.7, color='orange')
     ax4.set_xlabel('Embedding Rank of Nearest Spatial Candidate')
     ax4.set_ylabel('Frequency')
@@ -383,9 +397,14 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     ax4.axvline(x=np.median(ranks), color='red', linestyle='--', label=f'Median={np.median(ranks):.0f}')
     ax4.legend()
     ax4.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot4_rank_distribution_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 5: Cumulative rank accuracy
-    ax5 = plt.subplot(3, 3, 5)
+    fig5, ax5 = plt.subplots(figsize=(8, 6))
     max_k = 20
     top_k_acc = [100 * np.sum(ranks <= k) / len(ranks) for k in range(1, max_k+1)]
     ax5.plot(range(1, max_k+1), top_k_acc, 'o-', linewidth=2)
@@ -394,18 +413,28 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     ax5.set_title('Top-K Accuracy')
     ax5.grid(alpha=0.3)
     ax5.axhline(y=50, color='gray', linestyle='--', alpha=0.5)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot5_topk_accuracy_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 6: Embedding norms comparison
-    ax6 = plt.subplot(3, 3, 6)
+    fig6, ax6 = plt.subplots(figsize=(8, 6))
     ax6.hist([norms_g1, norms_g2], bins=50, label=['G1', 'G2'], alpha=0.6, edgecolor='black')
     ax6.set_xlabel('Embedding Norm')
     ax6.set_ylabel('Frequency')
     ax6.set_title('Embedding Norms by Graph')
     ax6.legend()
     ax6.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot6_embedding_norms_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 7: Distance bins vs similarity
-    ax7 = plt.subplot(3, 3, 7)
+    fig7, ax7 = plt.subplots(figsize=(8, 6))
     bins = [(0, 2), (2, 5), (5, 10), (10, 15), (15, 20)]
     bin_labels = ['0-2m', '2-5m', '5-10m', '10-15m', '15-20m']
     bin_means = []
@@ -422,9 +451,14 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     ax7.set_title('Embedding Similarity by Distance')
     ax7.grid(alpha=0.3, axis='y')
     ax7.tick_params(axis='x', rotation=45)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot7_similarity_by_distance_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 8: Nearest candidate embedding similarity
-    ax8 = plt.subplot(3, 3, 8)
+    fig8, ax8 = plt.subplots(figsize=(8, 6))
     ax8.hist(nearest_embedding_sims, bins=50, edgecolor='black', alpha=0.7, color='red')
     ax8.set_xlabel('Embedding Similarity')
     ax8.set_ylabel('Frequency')
@@ -433,9 +467,14 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
                 label=f'Median={np.median(nearest_embedding_sims):.3f}')
     ax8.legend()
     ax8.grid(alpha=0.3)
+    plt.tight_layout()
+    viz_path = OUTPUTS_DIR / f"plot8_nearest_candidate_sim_{method}_{dataset1_name}_{dataset2_name}.png"
+    plt.savefig(viz_path, dpi=150, bbox_inches='tight')
+    print(f"✓ Saved: {viz_path}")
+    plt.close()
     
     # Plot 9: Top-K bar chart
-    ax9 = plt.subplot(3, 3, 9)
+    fig9, ax9 = plt.subplots(figsize=(8, 6))
     topk_values = [1, 3, 5, 10, 20]
     topk_pcts = [100 * np.sum(ranks <= k) / len(ranks) for k in topk_values]
     ax9.bar([str(k) for k in topk_values], topk_pcts, edgecolor='black', alpha=0.7, color='teal')
@@ -445,15 +484,13 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     ax9.grid(alpha=0.3, axis='y')
     for i, (k, pct) in enumerate(zip(topk_values, topk_pcts)):
         ax9.text(i, pct + 2, f'{pct:.1f}%', ha='center', va='bottom', fontweight='bold')
-    
     plt.tight_layout()
-    
-    # Save visualization
-    viz_filename = f"embedding_analysis_{method}_{dataset1_name}_{dataset2_name}.png"
-    viz_path = OUTPUTS_DIR / viz_filename
+    viz_path = OUTPUTS_DIR / f"plot9_topk_summary_{method}_{dataset1_name}_{dataset2_name}.png"
     plt.savefig(viz_path, dpi=150, bbox_inches='tight')
-    print(f"\n✓ Saved: {viz_path}")
+    print(f"✓ Saved: {viz_path}")
     plt.close()
+    
+    print(f"\n✓ Saved 9 separate plots to {OUTPUTS_DIR}")
     
     # ============================================
     # SUMMARY
