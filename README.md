@@ -44,6 +44,25 @@ Network_Alignment/
 
 ---
 
+## Datasets
+
+The datasets used in this project are publicly available on Figshare:
+
+**[Download datasets](https://doi.org/10.6084/m9.figshare.31628335)**
+
+After downloading, place the dataset folders inside `data/raw/` following this structure:
+
+```
+data/raw/
+├── Dataset1/
+├── Dataset5/
+├── IGN/
+├── OSM/
+└── Prades/
+```
+
+---
+
 ## Installation
 
 ### For CENA / SANA / DeepWalk
