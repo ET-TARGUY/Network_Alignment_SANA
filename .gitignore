@@ -2,7 +2,7 @@
 .venv/
 venv/
 env/
-venv_struc2vec
+venv_struc2vec/
 
 
 # IDE
@@ -11,8 +11,13 @@ venv_struc2vec
 # Python cache
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
 .Python
+*.egg-info/
+dist/
+build/
 
 
 # Data files - ignore contents, keep folder structure for Dataset1, Dataset5, IGN, OSM
@@ -56,10 +61,21 @@ pickles/
 # Embeddings (large files, can be regenerated)
 embeddings/
 
+# Random walks output
+random_walks.txt
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
 # System files
 .DS_Store
 Thumbs.db
 *.swp
+*.swo
+
+# Editor
+.idea/
 
 # Environment variables
 .env

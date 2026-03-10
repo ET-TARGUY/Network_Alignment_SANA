@@ -147,7 +147,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     # Load Candidates (Method-Dependent)
     # ============================================
 
-    if method == "gaussian":
+    if method == "SANA":
         # Gaussian: Use spatial candidates (filtered by radius)
         candidates_filename = f"spatial_candidates_to_{dataset2_name}_{radius}m.pkl"
         candidates_path = base_dir / dataset1_name / candidates_filename
@@ -165,7 +165,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
         
         print(f"  ✓ Loaded spatial candidates")
 
-    elif method == "cena":
+    elif method == "CENA":
         # CENA: Use ALL nodes (no spatial filtering)
         print(f"\nBuilding FULL candidate sets (CENA - no spatial filter)...")
         

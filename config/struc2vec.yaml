@@ -1,8 +1,8 @@
 # Project paths
 paths:
+  data_raw: "data/raw"
   data_processed: "data/processed"
   outputs: "outputs/struc2vec"
-  temp: "temp"  # For temporary edgelist files
 
 # Dataset pairs
 dataset_pairs:
@@ -22,7 +22,7 @@ struc2vec:
   OPT2: true
   OPT3: true
   until_layer: 6
-  
+
   # Comparison methods
   comparison_methods:
     - "direct"

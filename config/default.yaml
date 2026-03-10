@@ -12,11 +12,12 @@ dataset_pairs:
   - ["Dataset1", "Dataset5"]
 
 # Zone selection
-zone: "full"  # Options: "full" or "Prades"
+zone: "Prades"  # Options: "full" or "Prades"
+
 
 # Spatial matching
 spatial:
-  radius: 40  # meters
+  radius: 20  # meters
   method: "kdtree"
 
 # Structural similarity (CENA)
@@ -26,7 +27,7 @@ structural:
 
 # Compound graph construction
 compound_graph:
-  method: "gaussian"  # Options: "gaussian" or "cena"
+  method: "CENA"  # Options: "SANA" or "CENA"
   
   # Gaussian method parameters
   gaussian:

@@ -179,7 +179,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     # Load Spatial Candidates (for Gaussian method)
     # ============================================
     
-    if method == "gaussian":
+    if method == "SANA":
         candidates_filename = f"spatial_candidates_to_{dataset2_name}_{radius}m.pkl"
         candidates_path = base_dir / dataset1_name / candidates_filename
         
@@ -204,7 +204,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     print(f"BUILDING COMPOUND GRAPH: {method.upper()}")
     print(f"{'='*60}")
     
-    if method == "gaussian":
+    if method == "SANA":
         # Gaussian method (spatial-based, with spatial filtering)
         sigma = config['compound_graph']['gaussian']['sigma']
         threshold = config['compound_graph']['gaussian']['threshold']
@@ -218,7 +218,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
             threshold=threshold
         )
         
-    elif method == "cena":
+    elif method == "CENA":
         # CENA method (structural-based, ALL cross-graph edges)
         threshold = config['compound_graph']['cena']['threshold']
         K = config['structural']['K']
@@ -262,10 +262,10 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Create output filename based on method
-    if method == "gaussian":
+    if method == "SANA":
         sigma = config['compound_graph']['gaussian']['sigma']
         compound_filename = f"compound_graph_gaussian_{dataset2_name}_{radius}m_sigma{sigma}.pkl"
-    elif method == "cena":
+    elif method == "CENA":
         K = config['structural']['K']
         compound_filename = f"compound_graph_cena_{dataset2_name}_{radius}m_K{K}.pkl"
     
@@ -297,10 +297,10 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     viz_dir.mkdir(parents=True, exist_ok=True)
 
     # Create output filename
-    if method == "gaussian":
+    if method == "SANA":
         sigma = config['compound_graph']['gaussian']['sigma']
         gpkg_filename = f"cross_edges_{dataset1_name}_to_{dataset2_name}_gaussian_{radius}m_sigma{sigma}.gpkg"
-    elif method == "cena":
+    elif method == "CENA":
         K = config['structural']['K']
         gpkg_filename = f"cross_edges_{dataset1_name}_to_{dataset2_name}_cena_{radius}m_K{K}.gpkg"
 

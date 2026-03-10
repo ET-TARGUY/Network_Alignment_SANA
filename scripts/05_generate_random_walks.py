@@ -88,10 +88,10 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     # ============================================
     
     # Determine compound graph filename based on method
-    if method == "gaussian":
+    if method == "SANA":
         sigma = config['compound_graph']['gaussian']['sigma']
         compound_filename = f"compound_graph_gaussian_{dataset2_name}_{radius}m_sigma{sigma}.pkl"
-    elif method == "cena":
+    elif method == "CENA":
         K = config['structural']['K']
         compound_filename = f"compound_graph_cena_{dataset2_name}_{radius}m_K{K}.pkl"
     else:
@@ -137,7 +137,7 @@ for pair_idx, (dataset1_name, dataset2_name) in enumerate(dataset_pairs, 1):
     # ============================================
     # Generate Random Walks
     # ============================================
-    if method == "cena":
+    if method == "CENA":
         # CENA biased random walks
         q = config['random_walks']['cena']['q']
         
