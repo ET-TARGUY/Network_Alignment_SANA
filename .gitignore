@@ -57,7 +57,8 @@ temp/
 pickles/
 *.pkl
 *.pickle
-
+!src/pickles/
+!src/pickles/.gitkeep
 
 
 # Random walks output

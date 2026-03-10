@@ -12,7 +12,7 @@ dataset_pairs:
   - ["Dataset1", "Dataset5"]
 
 # Zone selection
-zone: "Prades"  # Options: "full" or "Prades"
+zone: "full"  # Options: "full" or "Prades"
 
 
 # Spatial matching
@@ -27,7 +27,7 @@ structural:
 
 # Compound graph construction
 compound_graph:
-  method: "CENA"  # Options: "SANA" or "CENA"
+  method: "SANA"  # Options: "SANA" or "CENA"
   
   # Gaussian method parameters
   gaussian:
