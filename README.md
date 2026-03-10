@@ -68,14 +68,16 @@ data/raw/
 ### For CENA / SANA / DeepWalk
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate   
 pip install -r requirements_SANA_CENA_DeepWalk.txt
 ```
 
 ### For Struc2Vec (separate environment)
 
 ```bash
-python -m venv venv_struc2vec
-source venv_struc2vec/bin/activate   # Windows: venv_struc2vec\Scripts\activate
+python -m venv .venv_struc2vec
+source .venv_struc2vec/bin/activate   
 pip install -r requirements_Struc2vec.txt
 ```
 
