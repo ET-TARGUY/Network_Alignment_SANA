@@ -5,6 +5,8 @@ paths:
   data_results: "data/results"
   outputs: "outputs"
 
+mode: "wastewater"  # Options: "wastewater" or "road"
+
 # Dataset pairs for alignment
 dataset_pairs:
   - ["Dataset1", "Dataset5"]
@@ -14,7 +16,7 @@ zone: "full"  # Options: "full" or "Prades"
 
 # Spatial matching
 spatial:
-  radius: 20  # meters
+  radius: 40  # meters
   method: "kdtree"
 
 # Structural similarity (CENA)
@@ -28,7 +30,7 @@ compound_graph:
   
   # Gaussian method parameters
   gaussian:
-    sigma: 5
+    sigma: 3
     threshold: 0
   
   # CENA method parameters
