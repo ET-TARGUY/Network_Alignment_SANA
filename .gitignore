@@ -79,3 +79,4 @@ Thumbs.db
 
 # Environment variables
 .env.venv_struc2vec/
+.venv_struc2vec/
