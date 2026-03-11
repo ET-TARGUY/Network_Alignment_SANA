@@ -27,7 +27,7 @@ structural:
 
 # Compound graph construction
 compound_graph:
-  method: "SANA"  # Options: "SANA" or "CENA"
+  method: "CENA"  # Options: "SANA" or "CENA"
   
   # Gaussian method parameters
   gaussian:
