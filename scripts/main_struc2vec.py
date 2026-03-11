@@ -31,16 +31,16 @@ def load_config(config_path="config/struc2vec.yaml"):
 def load_graphs_from_edgelist(config):
     import csv
 
-    raw_dir  = Path(config['paths']['data_raw'])
-    zone     = config.get('zone', 'full')
+    processed_dir = Path(config['paths']['data_processed'])
+    zone = config.get('zone', 'full')
     dataset_pair = config['dataset_pairs'][0]
 
-    base_dir = raw_dir / "Prades" if zone == "Prades" else raw_dir
+    suffix = f"_{zone.lower()}" if zone.lower() != "full" else ""
 
-    edgelist1 = base_dir / dataset_pair[0] / f"{dataset_pair[0].lower()}_prades.edgelist"
-    edgelist2 = base_dir / dataset_pair[1] / f"{dataset_pair[1].lower()}_prades.edgelist"
-    coords1   = base_dir / dataset_pair[0] / f"{dataset_pair[0].lower()}_prades_coords.csv"
-    coords2   = base_dir / dataset_pair[1] / f"{dataset_pair[1].lower()}_prades_coords.csv"
+    edgelist1 = processed_dir / dataset_pair[0] / f"{dataset_pair[0]}{suffix}.edgelist"
+    edgelist2 = processed_dir / dataset_pair[1] / f"{dataset_pair[1]}{suffix}.edgelist"
+    coords1   = processed_dir / dataset_pair[0] / f"{dataset_pair[0]}{suffix}_coords.csv"
+    coords2   = processed_dir / dataset_pair[1] / f"{dataset_pair[1]}{suffix}_coords.csv"
 
     print(f"Loading {dataset_pair[0]} from {edgelist1}")
     G = nx.read_edgelist(str(edgelist1))

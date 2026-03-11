@@ -12,7 +12,7 @@ dataset_pairs:
   - ["Dataset1", "Dataset5"]
 
 # Zone selection
-zone: "full"  # Options: "full" or "Prades"
+zone: "Prades"  # Options: "full" or "Prades"
 
 
 # Spatial matching

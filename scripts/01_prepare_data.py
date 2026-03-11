@@ -10,7 +10,8 @@ import sys
 import os
 import pickle
 from pathlib import Path
-
+import pandas as pd
+import networkx as nx
 import yaml
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -86,6 +87,22 @@ for i, dataset_name in enumerate(DATASETS, 1):
     except Exception as e:
         print(f"  ❌ Error loading {dataset_name}: {e}")
         continue
+
+
+        # Determine file suffix based on zone
+    suffix = f"_{ZONE.lower()}" if ZONE.lower() != "full" else ""
+
+    # Save edgelist
+    edgelist_path = dataset_folder / f"{dataset_name}{suffix}.edgelist"
+    nx.write_edgelist(G, edgelist_path, data=False)
+    print(f"  ✓ Edgelist saved to: {edgelist_path}")
+
+    # Save coords CSV
+    coords_path = dataset_folder / f"{dataset_name}{suffix}_coords.csv"
+    coords = {node: (data.get("x"), data.get("y"))
+            for node, data in G.nodes(data=True)}
+    pd.DataFrame.from_dict(coords, orient="index", columns=["x", "y"]).to_csv(coords_path, index_label="node_id")
+    print(f"  ✓ Coords saved to: {coords_path}")
 
 # ============================================
 # SUMMARY

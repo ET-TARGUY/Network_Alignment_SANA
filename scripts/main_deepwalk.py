@@ -29,10 +29,12 @@ def load_graphs_from_edgelist(config):
     """Load graphs from edgelists and coordinates from CSV"""
     import csv
     
-    temp_dir = Path(config['paths']['temp'])
+    processed_dir = Path(config['paths']['data_processed'])
     dataset_pair = config['dataset_pairs'][0]
-    zone = config.get('zone', 'full')  # Default to 'full' if not specified
-    
+    zone = config.get('zone', 'full')
+        
+
+
     print(f"Zone: {zone}")
     
     # Determine file naming based on zone
@@ -43,10 +45,12 @@ def load_graphs_from_edgelist(config):
     else:
         raise ValueError(f"Unknown zone: {zone}. Expected 'prades' or 'full'")
     
-    # Load from edgelists
-    edgelist1 = temp_dir / f"{dataset_pair[0].lower()}{suffix}.edgelist"
-    edgelist2 = temp_dir / f"{dataset_pair[1].lower()}{suffix}.edgelist"
-    
+    suffix = f"_{zone.lower()}" if zone.lower() != "full" else ""
+
+    edgelist1 = processed_dir / dataset_pair[0] / f"{dataset_pair[0]}{suffix}.edgelist"
+    edgelist2 = processed_dir / dataset_pair[1] / f"{dataset_pair[1]}{suffix}.edgelist"
+
+ 
     print(f"Loading {dataset_pair[0]} from {edgelist1}")
     G = nx.read_edgelist(str(edgelist1))
     
@@ -54,8 +58,9 @@ def load_graphs_from_edgelist(config):
     G_prime = nx.read_edgelist(str(edgelist2))
     
     # Load coordinates from CSV
-    coords1 = temp_dir / f"{dataset_pair[0].lower()}{suffix}_coords.csv"
-    coords2 = temp_dir / f"{dataset_pair[1].lower()}{suffix}_coords.csv"
+    coords1 = processed_dir / dataset_pair[0] / f"{dataset_pair[0]}{suffix}_coords.csv"
+    coords2 = processed_dir / dataset_pair[1] / f"{dataset_pair[1]}{suffix}_coords.csv"
+    
     
     print(f"Loading coordinates from CSV files...")
     

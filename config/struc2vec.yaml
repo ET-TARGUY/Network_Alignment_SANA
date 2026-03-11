@@ -1,7 +1,6 @@
 # Project paths
 paths:
-  data_raw: "data/raw"
-  data_processed: "data/processed"
+  data_processed: "data/processed/Prades"
   outputs: "outputs/struc2vec"
 
 # Dataset pairs
