@@ -8,8 +8,8 @@ A graph-based pipeline for aligning two geospatial networks (wastewater or road)
 
 | Method | Description |
 |--------|-------------|
-| **CENA** | Main method — structural similarity + compound graph + random walks + Word2Vec embeddings + Hungarian matching |
-| **SANA** | Simulated Annealing Network Alignment (baseline) |
+| **SANA** | Main method — Simulated Annealing Network Alignment, compound graph + random walks + Word2Vec embeddings + Hungarian matching |
+| **CENA** | Cross-network Embedding Network Alignment (baseline) — structural similarity + compound graph + random walks + Word2Vec embeddings |
 | **DeepWalk** | Classic random walk graph embedding (baseline) |
 | **Struc2Vec** | Structure-aware graph embedding (baseline, separate environment) |
 
