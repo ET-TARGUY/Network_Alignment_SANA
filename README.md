@@ -112,7 +112,7 @@ pip install -r requirements_SANA_CENA_DeepWalk.txt
 ### For Struc2Vec (separate environment)
 
 ```bash
-python -m venv .venv_struc2vec
+python3.11 -m venv .venv_struc2vec
 source .venv_struc2vec/bin/activate
 pip install -r requirements_Struc2vec.txt
 ```
