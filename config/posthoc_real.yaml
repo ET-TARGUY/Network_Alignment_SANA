@@ -1,0 +1,39 @@
+# DeepWalk and struc2vec on the real source pairs (step 2).
+# Anchors come from the proximity ground truth here, since no provenance map
+# exists: 10% of the co-located pairs, excluded from scoring.
+#
+#   python scripts/main_posthoc.py --config config/posthoc_real.yaml \
+#       --method deepwalk --base config/all_pairs.yaml --jobs 2
+
+base_config: config/all_pairs.yaml
+
+out_dir: results
+out_prefix: real
+
+shared:
+  dimensions: 128
+  num_walks: 10
+  walk_length: 80
+  window_size: 5
+  epochs: 5
+  negative: 5
+  workers: 6
+  seed: 42
+
+struc2vec:
+  python: venv_struc2vec/bin/python
+  until_layer: 4        # selected on composite L0.125
+  OPT1: true
+  OPT2: true
+  OPT3: true
+  keep_run_dir: false
+
+alignment:
+  candidates: embedding_topk
+  top_k: 50
+  anchors: colocated       # no provenance map on the real pairs
+  anchor_fraction: 0.10
+  anchor_seed: 0
+  anchor_tolerance_m: 0.1
+  exclude_anchors_from_eval: true
+  min_anchors: 10

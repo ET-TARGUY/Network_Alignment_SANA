@@ -1,0 +1,35 @@
+# Post-hoc embedding baselines (DeepWalk, struc2vec) - scripts/main_posthoc.py
+# Run from the repo root with the MAIN environment (.venv).
+
+out_dir: results
+out_prefix: posthoc
+
+# Shared embedding settings - identical for every embedding method, never tuned.
+shared:
+  dimensions: 128
+  num_walks: 10
+  walk_length: 80
+  window_size: 5
+  epochs: 5
+  negative: 5
+  workers: 4
+  seed: 42          # DeepWalk walks and Word2Vec init (struc2vec's library is unseeded)
+
+struc2vec:
+  python: venv_struc2vec/bin/python   # used only to train struc2vec
+  until_layer: 6                      # fixed value; override with --layers
+  OPT1: true
+  OPT2: true
+  OPT3: true                          # must stay true, until_layer is ignored otherwise
+  keep_run_dir: false
+
+alignment:
+  candidates: embedding_topk   # embedding_topk: top_k nearest in the aligned embedding
+                               # space (no spatial signal) | radius: spatial.radius
+  top_k: 50
+  anchors: provenance          # provenance (Protocol A) | colocated (real pairs) | mutual_nn
+  anchor_fraction: 0.10        # share of the ground-truth pairs given as anchors
+  anchor_seed: 0
+  anchor_tolerance_m: 0.1      # colocated / mutual_nn only; null = candidate radius
+  exclude_anchors_from_eval: true
+  min_anchors: 10

@@ -1,0 +1,37 @@
+# struc2vec baseline - tuning until_layer under Protocol A.
+# Same protocol as SANA in config/sweep.yaml: tuned on seed 1 of every Z1
+# variant, until_layer chosen by 2-fold spatial cross-fitting.
+#
+# Run from the repo root with the MAIN environment (.venv), not venv_struc2vec:
+#   .venv/bin/python scripts/main_struc2vec.py --config config/struc2vec_tuning.yaml --dry-run
+#   .venv/bin/python scripts/main_struc2vec.py --config config/struc2vec_tuning.yaml
+# Build the variants first (scripts/run_sweep.py) - this script only reads them.
+
+variants:
+  - "data/processed/Z1__*_s01"
+
+out_dir: results
+out_prefix: struc2vec_tuning
+
+# Shared embedding settings (identical to SANA / DeepWalk / CENA).
+struc2vec:
+  python: venv_struc2vec/bin/python   # only used for training
+  dimensions: 128
+  num_walks: 10
+  walk_length: 80
+  window_size: 5
+  epochs: 5
+  workers: 4
+  OPT1: true
+  OPT2: true
+  OPT3: true            # must stay true - until_layer is ignored otherwise
+  keep_run_dir: false   # true keeps the per-run library copy and walks for debugging
+
+grid:
+  until_layer: [2, 4, 6, 8, 10]
+
+alignment:
+  mode: procrustes          # procrustes | direct (no cross-space alignment)
+  anchors: mutual_nn        # mutual_nn | colocated (old rule: unique partner within tolerance)
+  anchor_tolerance_m: null  # null = the variant's candidate radius
+  min_anchors: 10

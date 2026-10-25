@@ -1,0 +1,31 @@
+# struc2vec baseline - the 10 real wastewater pairs at full scale, through the
+# shared evaluator (0.1 m co-location ground truth), at the tuned until_layer.
+#
+#   .venv/bin/python scripts/main_struc2vec.py --config config/struc2vec_all_pairs.yaml
+
+base_config: config/all_pairs.yaml   # pairs, zone, radius, outputs
+
+out_dir: results
+out_prefix: struc2vec_all_pairs
+
+struc2vec:
+  python: venv_struc2vec/bin/python
+  dimensions: 128
+  num_walks: 10
+  walk_length: 80
+  window_size: 5
+  epochs: 5
+  workers: 4
+  OPT1: true
+  OPT2: true
+  OPT3: true
+  keep_run_dir: false
+
+grid:
+  until_layer: [6]   # TODO: set to the value selected in results/struc2vec_tuning_selected.csv
+
+alignment:
+  mode: procrustes
+  anchors: mutual_nn
+  anchor_tolerance_m: null   # null = spatial.radius of all_pairs.yaml
+  min_anchors: 10

@@ -1,0 +1,10 @@
+# struc2vec environment (Python 3.9), used only to train struc2vec embeddings
+# (src/struc2vec_lib). It pins an older networkx/gensim than the main environment.
+fastdtw==0.3.4
+futures==3.0.5
+gensim==4.3.1
+networkx==2.6.3
+numpy==1.25.0
+scipy==1.11.1
+six==1.17.0
+smart_open==7.5.0

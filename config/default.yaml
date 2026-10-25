@@ -1,0 +1,136 @@
+# Project paths
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  data_results: "data/results"
+  outputs: "outputs"
+
+# Optional outputs. Only the pickles each later step reads are essential:
+#   02 spatial_candidates  04 compound_graph  05 random_walks  06 embeddings
+#   08 alignment_hungarian 09 alignment_evaluation
+# Everything below is for inspection, costs time and disk, and is off for sweeps.
+export_gpkg: false      # 04/08: cross-edge and match layers for QGIS
+export_figures: false   # 09 and main_nearest_neighbor: evaluation PNGs
+save_model: false       # 06: the Word2Vec model (the embeddings pickle is kept)
+save_walk_stats: false  # 05: per-walk statistics inside the walks pickle
+
+mode: "wastewater"  # Options: "wastewater" or "road"
+
+# Dataset pairs for alignment
+dataset_pairs:
+  - ["Dataset1", "Dataset5"]
+
+# Zone selection
+zone: "Z1"  # "full", "Prades", or any derived zone defined under `zones:` below
+
+# Derived zones are carved from the full network by scripts/01b_carve_zone.py.
+# Box coordinates are EPSG:2154 metres. `halo_hops` is the topological context
+# ring kept around the core box: it must be >= max(structural.K, embeddings.window)
+# so that k-hop signatures and skip-gram contexts of core nodes are not truncated
+# by the cut. Halo nodes are graph context only and are excluded from evaluation.
+zones:
+  Z1:
+    description: "4x4 km dense urban window (~6.9k D1 / 8.4k D5 nodes, 433 nodes/km2)"
+    xmin: 767364.0
+    xmax: 771364.0
+    ymin: 6277307.0
+    ymax: 6281307.0
+    halo_hops: 8
+
+# Perturbation - scripts/01c_perturb.py  (Protocol A: self-alignment)
+# The zone is aligned against a perturbed copy of ITSELF, so the provenance map
+# is the whole ground truth: exact, complete, and not spatially defined. That is
+# what makes the comparison against spatial-only baselines fair.
+perturbation:
+  source_dataset: "Dataset1"
+  clean_name: "Dataset1"
+  perturbed_name: "Dataset1P"
+  id_offset: 10000000
+  family: "identity"   # identity | jitter | warp | densify
+  level: 0.0           # x median node spacing (jitter, warp); fraction of edges (densify)
+  seed: 1
+  gt_coverage: 0.99    # candidate radius is sized to keep this share of true pairs in the gate
+  warp:
+    correlation_length_m: 500
+  # Composite: densify FIRST so inserted vertices are carried by the same
+  # displacement field, then warp. Neither family alone defeats a
+  # nearest-neighbour baseline - densify halves the spacing between candidates,
+  # which is what makes the displacement bite.
+  composite:
+    steps:
+      - family: densify
+        level: 0.26          # the measured Dataset5/Dataset1 node ratio
+      - family: warp
+        level: "@level"      # inherits the variant level
+        params:
+          correlation_length_m: 500
+
+
+# Spatial matching
+spatial:
+  radius: 20  # meters
+  method: "kdtree"
+
+# Structural similarity (CENA)
+structural:
+  K: 3  # k-hop neighborhood depth
+  alpha: 1.0  # decay parameter
+  candidates: all     # all: compare every cross-graph pair, keep top_m per node (CENA uses
+                      #      no spatial signal) | radius: restrict to spatial.radius
+  top_m: 50           # structural candidates kept per node in "all" mode
+
+# Compound graph construction
+compound_graph:
+  method: "SANA"  # Options: "SANA" or "CENA"
+  
+  # Gaussian method parameters
+  gaussian:
+    sigma: 3
+    threshold: 0
+  
+  # CENA method parameters
+  cena:
+    threshold: 0.0  # No threshold for CENA (uses all cross-edges)
+
+# Random walks (for embeddings)
+random_walks:
+  num_walks: 10  # walks per node
+  walk_length: 80  # length of each walk
+  seed: 42  # random seed for reproducibility
+
+   # CENA-specific parameters
+  cena:
+    q: 0.5  # Network switching probability (0.5 = equal probability)
+
+
+
+
+# Embeddings (Word2Vec Skip-gram)
+embeddings:
+  vector_size: 128
+  window: 5
+  min_count: 1
+  workers: 20
+  epochs: 5
+  sg: 1  # 1 for Skip-gram, 0 for CBOW
+  hs: 0  # 0 for negative sampling
+  negative: 5
+  seed: 42
+
+
+# Hungarian alignment
+alignment:
+  alpha: 1  # Embedding weight
+  beta: 0   # Spatial weight (should equal 1 - alpha)
+  sigma: 5    # Gaussian bandwidth for spatial similarity
+  min_similarity: 0  # Minimum combined similarity threshold
+
+
+
+
+
+
+
+
+  
+ 

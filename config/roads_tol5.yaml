@@ -1,0 +1,77 @@
+# IGN-OSM road pair, proximity ground truth at 5 m.
+# The threshold is a convention: the mutual-NN displacement
+# distribution has no gap (p25 1.36, p50 2.66, p75 5.94 m).
+paths:
+  data_raw: data/raw
+  data_processed: data/processed
+  data_results: data/results
+  outputs: outputs/roads_tol5
+export_gpkg: false
+mode: road
+dataset_pairs:
+- - IGN
+  - OSM
+zone: full
+zones:
+  Z1:
+    description: 4x4 km dense urban window (~6.9k D1 / 8.4k D5 nodes, 433 nodes/km2)
+    xmin: 767364.0
+    xmax: 771364.0
+    ymin: 6277307.0
+    ymax: 6281307.0
+    halo_hops: 8
+perturbation:
+  source_dataset: Dataset1
+  clean_name: Dataset1
+  perturbed_name: Dataset1P
+  id_offset: 10000000
+  family: identity
+  level: 0.0
+  seed: 1
+  gt_coverage: 0.99
+  warp:
+    correlation_length_m: 500
+  composite:
+    steps:
+    - family: densify
+      level: 0.26
+    - family: warp
+      level: '@level'
+      params:
+        correlation_length_m: 500
+spatial:
+  radius: 20
+  method: kdtree
+structural:
+  K: 3
+  alpha: 1.0
+compound_graph:
+  method: SANA
+  gaussian:
+    sigma: 3
+    threshold: 0
+  cena:
+    threshold: 0.0
+random_walks:
+  num_walks: 10
+  walk_length: 80
+  seed: 42
+  cena:
+    q: 0.5
+embeddings:
+  vector_size: 128
+  window: 5
+  min_count: 1
+  workers: 20
+  epochs: 5
+  sg: 1
+  hs: 0
+  negative: 5
+  seed: 42
+alignment:
+  alpha: 1
+  beta: 0
+  sigma: 5
+  min_similarity: 0
+evaluation:
+  gt_tolerance_m: 5.0

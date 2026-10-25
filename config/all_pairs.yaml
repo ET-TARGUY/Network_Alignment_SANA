@@ -1,0 +1,95 @@
+# All 10 wastewater pairs at full scale, SANA + spatial baselines.
+# Ground truth is 0.1 m co-location - the same criterion a spatial
+# baseline optimises, so this table shows the standard evaluation is
+# degenerate rather than which method is better.
+
+paths:
+  data_raw: data/raw
+  data_processed: data/processed
+  data_results: data/results
+  outputs: outputs/all_pairs
+export_gpkg: false
+mode: wastewater
+dataset_pairs:
+- - Dataset1
+  - Dataset2
+- - Dataset1
+  - Dataset3
+- - Dataset1
+  - Dataset4
+- - Dataset1
+  - Dataset5
+- - Dataset2
+  - Dataset3
+- - Dataset2
+  - Dataset4
+- - Dataset2
+  - Dataset5
+- - Dataset3
+  - Dataset4
+- - Dataset3
+  - Dataset5
+- - Dataset4
+  - Dataset5
+zone: full
+zones:
+  Z1:
+    description: 4x4 km dense urban window (~6.9k D1 / 8.4k D5 nodes, 433 nodes/km2)
+    xmin: 767364.0
+    xmax: 771364.0
+    ymin: 6277307.0
+    ymax: 6281307.0
+    halo_hops: 8
+perturbation:
+  source_dataset: Dataset1
+  clean_name: Dataset1
+  perturbed_name: Dataset1P
+  id_offset: 10000000
+  family: identity
+  level: 0.0
+  seed: 1
+  gt_coverage: 0.99
+  warp:
+    correlation_length_m: 500
+  composite:
+    steps:
+    - family: densify
+      level: 0.26
+    - family: warp
+      level: '@level'
+      params:
+        correlation_length_m: 500
+spatial:
+  radius: 20
+  method: kdtree
+structural:
+  K: 3
+  alpha: 1.0
+compound_graph:
+  method: SANA
+  gaussian:
+    sigma: 3
+    threshold: 0
+  cena:
+    threshold: 0.0
+random_walks:
+  num_walks: 10
+  walk_length: 80
+  seed: 42
+  cena:
+    q: 0.5
+embeddings:
+  vector_size: 128
+  window: 5
+  min_count: 1
+  workers: 20
+  epochs: 5
+  sg: 1
+  hs: 0
+  negative: 5
+  seed: 42
+alignment:
+  alpha: 1
+  beta: 0
+  sigma: 5
+  min_similarity: 0

@@ -1,0 +1,12 @@
+pair,ratio,colocated_pct,mutual_pairs,mean_displacement_m,median_displacement_m,displacement_over_s,shift_m,cutoff_m
+Dataset1-Dataset2,1.07,87.9,42564,0.24,0.0,0.013,0.01,9.25
+Dataset1-Dataset3,0.82,48.1,30124,0.72,0.0,0.038,0.05,9.39
+Dataset1-Dataset4,0.86,46.9,30043,0.76,0.0,0.041,0.06,9.27
+Dataset1-Dataset5,1.26,67.0,40313,0.66,0.0,0.038,0.03,8.62
+Dataset2-Dataset3,0.76,37.7,30072,0.97,0.0,0.053,0.04,9.12
+Dataset2-Dataset4,0.8,40.3,30534,0.91,0.0,0.05,0.04,9.0
+Dataset2-Dataset5,1.17,78.7,44416,0.4,0.0,0.024,0.02,8.35
+Dataset3-Dataset4,1.05,94.7,35268,0.08,0.0,0.004,0.0,9.14
+Dataset3-Dataset5,1.54,74.1,33226,0.43,0.0,0.025,0.02,8.49
+Dataset4-Dataset5,1.46,76.3,34521,0.35,0.0,0.021,0.02,8.38
+IGN-OSM,0.64,0.1,142796,3.22,2.28,0.116,0.04,13.87

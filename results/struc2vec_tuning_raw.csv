@@ -1,0 +1,10 @@
+variant,dataset1,dataset2,until_layer,fold,status,n_eval,TP,FP,FN,precision,recall,f1,radius_m,gt_mode,expected_no_match,false_alarms,anchor_mode,n_anchors,no_embedding_g1,train_seconds,seconds
+Z1__composite_L0_s01,Dataset1,Dataset1P,2,A,ok,3464,3099,365,0,0.89463,0.89463,0.89463,20.0,provenance,0,0,mutual_nn,7788,0,142.0,143.9
+Z1__composite_L0_s01,Dataset1,Dataset1P,2,B,ok,3464,3048,416,0,0.879908,0.879908,0.879908,20.0,provenance,0,0,mutual_nn,7788,0,142.0,143.9
+Z1__composite_L0_s01,Dataset1,Dataset1P,2,all,ok,6928,6147,781,0,0.887269,0.887269,0.887269,20.0,provenance,0,0,mutual_nn,7788,0,142.0,143.9
+Z1__composite_L0_s01,Dataset1,Dataset1P,4,A,ok,3464,3056,408,0,0.882217,0.882217,0.882217,20.0,provenance,0,0,mutual_nn,7788,0,150.0,151.4
+Z1__composite_L0_s01,Dataset1,Dataset1P,4,B,ok,3464,3019,445,0,0.871536,0.871536,0.871536,20.0,provenance,0,0,mutual_nn,7788,0,150.0,151.4
+Z1__composite_L0_s01,Dataset1,Dataset1P,4,all,ok,6928,6075,853,0,0.876876,0.876876,0.876876,20.0,provenance,0,0,mutual_nn,7788,0,150.0,151.4
+Z1__composite_L0_s01,Dataset1,Dataset1P,6,A,ok,3464,3007,457,0,0.868072,0.868072,0.868072,20.0,provenance,0,0,mutual_nn,7788,0,156.4,157.9
+Z1__composite_L0_s01,Dataset1,Dataset1P,6,B,ok,3464,3044,420,0,0.878753,0.878753,0.878753,20.0,provenance,0,0,mutual_nn,7788,0,156.4,157.9
+Z1__composite_L0_s01,Dataset1,Dataset1P,6,all,ok,6928,6051,877,0,0.873412,0.873412,0.873412,20.0,provenance,0,0,mutual_nn,7788,0,156.4,157.9

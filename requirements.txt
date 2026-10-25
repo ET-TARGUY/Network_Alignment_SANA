@@ -1,0 +1,15 @@
+# Main environment (Python 3.11): SANA, CENA, nearest neighbour, DeepWalk,
+# evaluation, perturbation protocol and analysis scripts.
+gensim==4.4.0
+geopandas==1.1.2
+matplotlib==3.10.8
+networkx==3.6.1
+numba==0.64.0
+numpy==2.4.1
+pandas==3.0.0
+pyogrio==0.12.1
+pyproj==3.7.2
+PyYAML==6.0.3
+scipy==1.17.0
+shapely==2.1.2
+tqdm==4.67.1

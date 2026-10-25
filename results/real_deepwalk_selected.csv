@@ -1,0 +1,11 @@
+variant,dataset1,dataset2,method,param_A,param_B,param_best_all,TP,FP,FN,precision,recall,f1
+all_pairs,Dataset1,Dataset2,deepwalk,-,-,-,399,34287,0,0.011503,1.0,0.022745
+all_pairs,Dataset1,Dataset3,deepwalk,-,-,-,454,15059,3449,0.029266,0.116321,0.046766
+all_pairs,Dataset1,Dataset4,deepwalk,-,-,-,441,15408,2664,0.027825,0.142029,0.046534
+all_pairs,Dataset1,Dataset5,deepwalk,-,-,-,412,26003,0,0.015597,1.0,0.030715
+all_pairs,Dataset2,Dataset3,deepwalk,-,-,-,287,9842,5838,0.028334,0.046857,0.035314
+all_pairs,Dataset2,Dataset4,deepwalk,-,-,-,318,11353,5390,0.027247,0.055711,0.036596
+all_pairs,Dataset2,Dataset5,deepwalk,-,-,-,365,32984,0,0.010945,1.0,0.021653
+all_pairs,Dataset3,Dataset4,deepwalk,-,-,-,465,30034,0,0.015246,1.0,0.030035
+all_pairs,Dataset3,Dataset5,deepwalk,-,-,-,451,23418,0,0.018895,1.0,0.037089
+all_pairs,Dataset4,Dataset5,deepwalk,-,-,-,470,25408,0,0.018162,1.0,0.035676

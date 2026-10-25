@@ -1,0 +1,20 @@
+# Environments
+.venv/
+venv_struc2vec/
+# Python cache
+__pycache__/
+*.py[cod]
+# Data and generated files (datasets are downloaded from Figshare)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+src/pickles/*
+!src/pickles/.gitkeep
+outputs/
+temp/
+cache/
+*.log
+# OS / IDE
+.DS_Store
+.vscode/

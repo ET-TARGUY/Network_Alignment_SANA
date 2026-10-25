@@ -1,0 +1,100 @@
+# Sweep definition for the Protocol A stress protocol (scripts/run_sweep.py).
+#
+# Levels are in units of the median node spacing s for the geometric families
+# and a fraction of edges for densify. Two facts set these grids, both measured
+# on Z1 (s = 16.2 m):
+#
+#   * A nearest-neighbour baseline only fails once displacement exceeds roughly
+#     half the distance to the nearest decoy. With 16 m spacing that is ~8 m,
+#     i.e. level 0.5. Anything below 0.25 is a dead zone where every method
+#     scores ~100% and nothing is learned.
+#   * densify does not move anything, so the true match stays at distance 0 and
+#     NN still finds it. What densify does is halve the spacing between
+#     candidates, which makes a given displacement twice as damaging.
+#
+# Hence `composite` (densify then warp) is the discriminating configuration and
+# carries the headline figure; the pure families are supporting curves.
+# densify 0.26 is the ratio measured on the real Dataset5/Dataset1 pair.
+
+zone: Z1
+base_config: config/default.yaml
+out_dir: results
+families:
+  composite:
+    levels:
+    - 0.0
+    - 0.125
+    - 0.25
+    - 0.5
+    - 0.75
+    - 1.0
+    params:
+      steps:
+      - family: densify
+        level: 0.26
+      - family: warp
+        level: '@level'
+        params:
+          correlation_length_m: 500
+  warp:
+    levels:
+    - 0.0
+    - 0.25
+    - 0.5
+    - 0.75
+    - 1.0
+    - 1.5
+    params:
+      correlation_length_m: 500
+  densify:
+    levels:
+    - 0.05
+    - 0.1
+    - 0.26
+    - 0.4
+    - 0.6
+    - 0.8
+  jitter:
+    levels:
+    - 0.25
+    - 0.5
+    - 0.75
+    - 1.0
+    - 1.5
+seeds:
+- 1
+- 2
+- 3
+- 4
+- 5
+methods:
+- SANA
+- NearestNeighbor
+- CENA
+grids:
+  sigma:
+  - 1
+  - 3
+  - 6
+  - 12
+  - 25
+  - 50
+  cena_K:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 8
+  - 10
+  alpha:
+  - 1.0
+  - 0.9
+  - 0.7
+  - 0.5
+  - 0.0
+tuning:
+  folds: 2
+  split: x_median
+  tune_on_seed: 1
